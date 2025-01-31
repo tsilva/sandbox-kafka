@@ -1,0 +1,16 @@
+{
+    "name": "sandbox-kakfa",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "cweijan.vscode-redis-client"
+            ]
+        }
+    },
+    "remoteUser": "devuser",
+    "overrideCommand": false
+}
