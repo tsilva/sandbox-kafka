@@ -1,0 +1,35 @@
+# Kafka installation (downloaded by setup.sh)
+kafka/
+
+# Kafka data
+kafka-logs/
+/tmp/kraft-combined-logs/
+
+# Logs
+*.log
+
+# Sensitive data
+.env
+.env.*
+*.pem
+*.key
+*.p12
+credentials.json
+secrets.json
+
+# Build artifacts
+__pycache__/
+*.py[cod]
+node_modules/
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo

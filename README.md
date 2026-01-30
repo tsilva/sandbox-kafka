@@ -1,58 +1,81 @@
 <div align="center">
   <img src="logo.png" alt="sandbox-kafka" width="512"/>
 
-  **📨 DevContainer-based Kafka sandbox for local development and testing**
+  **Learn Apache Kafka from scratch — hands-on lessons using only the command line**
 
 </div>
 
-## Overview
+## What is Kafka?
 
-A Kafka sandbox environment designed for local development and testing. Uses DevContainer to provide a containerized environment with Kafka 3.9.0 and Zookeeper pre-installed.
+Apache Kafka is a distributed event streaming platform used for building real-time data pipelines and streaming applications. Think of it as a durable, high-throughput message bus: producers write messages to topics, and consumers read them.
 
-## Features
+This project is a hands-on tutorial that teaches Kafka fundamentals through progressive shell script lessons. No frameworks, no application code — just you, a terminal, and the Kafka CLI tools.
 
-- **Pre-configured setup** - Kafka 3.9.0 and Zookeeper ready to use
-- **DevContainer** - Ubuntu 22.04 with Java 11 and Miniconda
-- **Auto-start** - Services start automatically on container launch
-- **Non-root user** - Runs as `devuser` for security
+## Prerequisites
+
+- **Java 17+** — [Download](https://adoptium.net/)
+- **A terminal** (macOS, Linux, or WSL on Windows)
+- **curl** (pre-installed on most systems)
+
+Check your Java version:
+```bash
+java -version
+```
 
 ## Quick Start
 
-1. Open in VS Code with DevContainer extension
-2. Container builds and starts automatically
-3. Kafka is ready on port 9092, Zookeeper on 2181
-
-## Common Commands
-
 ```bash
-# List topics
-$KAFKA_HOME/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
+# 1. Download and configure Kafka 4.1.1
+./setup.sh
 
-# Create topic
-$KAFKA_HOME/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 \
-  --replication-factor 1 --partitions 1 --topic my-topic
+# 2. Start Kafka (keep this terminal open)
+./start-kafka.sh
 
-# Produce messages
-$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic my-topic
+# 3. In a new terminal, verify everything works
+./lessons/00-verify-setup.sh
 
-# Consume messages
-$KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 \
-  --topic my-topic --from-beginning
+# 4. Start learning!
+./lessons/01-create-topics.sh
 ```
 
-## Environment
+## Lessons
 
-| Variable | Value |
-|----------|-------|
-| `KAFKA_HOME` | `/opt/kafka` |
-| `KAFKA_VERSION` | `3.9.0` |
-| `SCALA_VERSION` | `2.13` |
-| `KAFKA_LOG_DIR` | `/workspace/kafka-logs` |
+| # | Script | What You'll Learn |
+|---|--------|-------------------|
+| 00 | `00-verify-setup.sh` | Verify Java and Kafka are running |
+| 01 | `01-create-topics.sh` | Create, list, and describe topics |
+| 02 | `02-produce-messages.sh` | Send messages with the console producer |
+| 03 | `03-consume-messages.sh` | Read messages, understand offsets |
+| 04 | `04-consumer-groups.sh` | Shared consumption, offset tracking, lag |
+| 05 | `05-partitions.sh` | Multi-partition ordering guarantees |
+| 06 | `06-message-keys.sh` | Key-based routing to partitions |
+| 07 | `07-log-retention.sh` | Time-based retention and log compaction |
+| 08 | `08-cleanup.sh` | Delete topics and shut down |
 
-## Requirements
+Run them in order — each lesson builds on concepts from previous ones.
 
-- Docker
-- VS Code with DevContainer extension
+## Key Concepts
+
+| Concept | Description |
+|---------|-------------|
+| **Broker** | A Kafka server that stores and serves messages |
+| **Topic** | A named stream of messages (like a database table) |
+| **Partition** | A topic is split into partitions for parallelism; ordering is guaranteed within a partition |
+| **Producer** | An application that writes messages to a topic |
+| **Consumer** | An application that reads messages from a topic |
+| **Consumer Group** | A set of consumers that share the work of reading a topic |
+| **Offset** | A sequential ID assigned to each message in a partition |
+| **KRaft** | Kafka's built-in consensus protocol, replacing the need for ZooKeeper |
+
+## Stopping and Cleaning Up
+
+```bash
+# Stop Kafka
+./stop-kafka.sh
+
+# Remove Kafka installation
+rm -rf ./kafka
+```
 
 ## License
 

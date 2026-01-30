@@ -4,54 +4,52 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Kafka sandbox environment designed for local development and testing. The project uses a DevContainer setup to provide a containerized environment with Kafka 3.9.0 and Zookeeper pre-installed.
+This is a hands-on Kafka tutorial project. Users learn Kafka fundamentals by running progressive shell script lessons that use the Kafka CLI tools directly. No Docker required — just Java 17+ and a terminal.
 
-## Environment Setup
+## Architecture
 
-The development environment is managed through DevContainer configuration:
-- **Docker**: Ubuntu 22.04 base with Java 11, Miniconda, and Kafka 3.9.0
-- **Automatic startup**: Zookeeper and Kafka are automatically started via entrypoint.sh
-- **Ports**: Kafka runs on port 9092, Zookeeper on port 2181
-- **User**: Runs as non-root user `devuser`
+- **Kafka 4.1.1** running in **KRaft mode** (no ZooKeeper)
+- `setup.sh` downloads Kafka, generates a cluster ID, and formats KRaft storage
+- `start-kafka.sh` runs Kafka in the foreground using `config/kraft/server.properties`
+- `stop-kafka.sh` stops the Kafka server
+- `lessons/00-08` are progressive tutorial scripts using `./kafka/bin/` CLI tools
 
-## Key Environment Variables
+## File Structure
 
-- `KAFKA_HOME=/opt/kafka` - Kafka installation directory
-- `KAFKA_VERSION=3.9.0` - Kafka version
-- `SCALA_VERSION=2.13` - Scala version for Kafka binaries
-- `KAFKA_LOG_DIR=/workspace/kafka-logs` - Kafka log storage
-
-## Common Kafka Commands
-
-All Kafka CLI tools are located in `$KAFKA_HOME/bin/`. Common commands:
-
-### List Topics
-```bash
-$KAFKA_HOME/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
+```
+setup.sh                      # Download & configure Kafka 4.1.1 (KRaft)
+start-kafka.sh                # Start Kafka in foreground
+stop-kafka.sh                 # Stop Kafka
+lessons/
+  00-verify-setup.sh          # Verify Java + Kafka running
+  01-create-topics.sh         # Create, list, describe topics
+  02-produce-messages.sh      # Console producer
+  03-consume-messages.sh      # Console consumer, offsets
+  04-consumer-groups.sh       # Consumer groups, lag
+  05-partitions.sh            # Multi-partition ordering
+  06-message-keys.sh          # Key-based routing
+  07-log-retention.sh         # Retention & compaction
+  08-cleanup.sh               # Delete topics, clean up
 ```
 
-### Create Topic
+## Key Paths
+
+- `./kafka/` — Kafka installation (downloaded by setup.sh, gitignored)
+- `./kafka/bin/` — Kafka CLI tools (kafka-topics.sh, kafka-console-producer.sh, etc.)
+- `./kafka/config/kraft/server.properties` — KRaft server configuration
+
+## Common Commands
+
 ```bash
-$KAFKA_HOME/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic <topic-name>
+# Kafka CLI tools are at ./kafka/bin/
+./kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
+./kafka/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1 --topic <name>
+./kafka/bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic <name>
+./kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <name> --from-beginning
 ```
-
-### Produce Messages
-```bash
-$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic <topic-name>
-```
-
-### Consume Messages
-```bash
-$KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <topic-name> --from-beginning
-```
-
-## Architecture Notes
-
-- **Entrypoint script** (.devcontainer/entrypoint.sh): Handles automatic startup of Zookeeper and Kafka when the container starts
-- **Log files**: Zookeeper logs at `/workspace/zookeeper.log`, Kafka logs at `/workspace/kafka.log`
-- **Data persistence**: Kafka logs are stored in `/workspace/kafka-logs` (mapped to host volume via DevContainer)
-- **Configuration**: Kafka configuration is modified at startup to use the writable workspace log directory
 
 ## Important Instructions
 
 - **README.md**: Must be kept up to date with any significant project changes
+- All lesson scripts follow the same pattern: header comments, numbered steps, `read -p` pauses between steps
+- Kafka runs on port 9092 (KRaft mode, no ZooKeeper port needed)
