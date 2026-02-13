@@ -1,7 +1,7 @@
 <div align="center">
   <img src="logo.png" alt="sandbox-kafka" width="512"/>
 
-  **Learn Apache Kafka from scratch — hands-on lessons using only the command line**
+  **📨 Hands-on Kafka tutorial with progressive shell script lessons 🎓**
 
 </div>
 
