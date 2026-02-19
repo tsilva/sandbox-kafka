@@ -1,43 +1,52 @@
-# Kafka installation (downloaded by setup.sh)
-kafka/
-
-# Kafka data
-kafka-logs/
-/tmp/kraft-combined-logs/
-
-# Logs
-*.log
-
-# Sensitive data
+# >>> MANAGED BY GITGUARD - DO NOT EDIT THIS SECTION <<<
+.claude/*.local.json
+.claude/*.local.json.bak
+.claude-sandbox.json
 .env
 .env.*
+!.env.example
+!.env.*.example
+.env.*.local
+.env.local
 *.pem
 *.key
 *.p12
+*.pfx
+*.gpg
+*.secret
+*-credentials.json
+service-account*.json
 credentials.json
 secrets.json
-
-# Build artifacts
-__pycache__/
-*.py[cod]
-node_modules/
-dist/
-build/
-
-# OS files
+.secrets/
+.aws/
+.ssh/
+config.local.*
 .DS_Store
 Thumbs.db
-
-# IDE
 .idea/
 .vscode/
 *.swp
 *.swo
-
-
-# Managed by tsilva/.github
-# Do not remove - synced automatically
-.claude/
-*.pyc
+*.code-workspace
+__pycache__/
+*.py[cod]
 .venv/
+venv/
+env/
+*.egg-info/
+node_modules/
+.npm/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
 logs/
+*.log
+# >>> END MANAGED <<<
+
+# Project-specific rules
+/tmp/kraft-combined-logs/
+kafka-logs/
+kafka/
