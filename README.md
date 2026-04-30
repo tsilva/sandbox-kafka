@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="logo.png" alt="sandbox-kafka" width="512"/>
+  <img src="https://raw.githubusercontent.com/tsilva/sandbox-kafka/main/logo.png" alt="sandbox-kafka" width="512"/>
 
   **📨 Hands-on Kafka tutorial with progressive shell script lessons 🎓**
 
