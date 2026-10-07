@@ -1,12 +1,13 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/tsilva/sandbox-kafka/main/logo.png" alt="sandbox-kafka" width="512"/>
+  <br />
+  <!-- repo-tagline:start -->
+  <strong>📨 Hands-on Kafka tutorial with progressive shell script lessons 🎓</strong>
+  <!-- repo-tagline:end -->
+</p>
+
 > [!NOTE]
 > This repository exists only for experimentation and is currently archived.
-
-<div align="center">
-  <img src="https://raw.githubusercontent.com/tsilva/sandbox-kafka/main/logo.png" alt="sandbox-kafka" width="512"/>
-
-  **📨 Hands-on Kafka tutorial with progressive shell script lessons 🎓**
-
-</div>
 
 ## What is Kafka?
 
